@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lazy Dad Gourmet - Dinner Stress Ends Tonight | AI Meal Planning</title>
-    <meta name="description" content="Stop asking 'what's for dinner?' Your personal AI chef creates a full week of meals in 60 seconds—using ingredients you already have. Trusted by 10,000+ busy families.">
+    <meta name="description" content="Stop asking 'what's for dinner?' Your personal AI chef creates a full week of meals in 60 seconds—using ingredients you already have. Coming soon to iOS.">
     <meta name="keywords" content="meal planning app, AI recipe generator, family meal planner, reduce food waste, grocery list app, weekly meal prep">
 
     <!-- Open Graph / Social Media -->
@@ -221,6 +221,123 @@
         .cta-note svg {
             vertical-align: middle;
             color: var(--success);
+        }
+
+        /* Signup Form */
+        .signup-form {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .email-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 1rem 1.5rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .email-input:focus {
+            border-color: var(--primary);
+        }
+
+        .signup-success {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .signup-success svg {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                flex-direction: column;
+            }
+            .email-input {
+                min-width: auto;
+                width: 100%;
+            }
+            .form-row .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* App Preview */
+        .app-preview {
+            margin-top: 2.5rem;
+            position: relative;
+        }
+
+        .screenshot-carousel {
+            position: relative;
+            width: 280px;
+            height: 560px;
+            margin: 0 auto;
+            border-radius: 36px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            background: #1C1917;
+            padding: 8px;
+        }
+
+        .app-screenshot {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30px;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .app-screenshot.active {
+            opacity: 1;
+        }
+
+        .screenshot-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #D1D5DB;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .dot.active {
+            background: var(--primary);
+        }
+
+        .dot:hover {
+            background: var(--primary);
         }
 
         /* Pain Section */
@@ -676,21 +793,42 @@
 
         <p class="hero-proof">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Be the first to stop stressing about dinner
+            <span id="waitlist-counter">0</span> of 500 early access spots claimed
         </p>
 
-        <div class="cta-buttons">
-            <a href="mailto:support@lazydadgourmet.com?subject=Notify%20me%20when%20Lazy%20Dad%20Gourmet%20launches" class="btn btn-primary">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                Get Notified at Launch
-            </a>
-            <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
-        </div>
+        <form class="signup-form" id="hero-signup" onsubmit="handleSignup(event)">
+            <div class="form-row">
+                <input type="email" placeholder="Enter your email" required class="email-input" id="hero-email">
+                <button type="submit" class="btn btn-primary">
+                    Join the Waitlist
+                </button>
+            </div>
+            <p class="signup-success" id="hero-success" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                You're on the list! We'll email you at launch.
+            </p>
+        </form>
 
         <p class="cta-note">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Coming soon • Free to download • No spam
+            Early access • Free forever for first 500 • No spam
         </p>
+
+        <a href="#how-it-works" class="btn btn-secondary" style="margin-top: 1rem;">See How It Works</a>
+
+        <!-- App Preview -->
+        <div class="app-preview">
+            <div class="screenshot-carousel">
+                <img src="screenshots/meal-plan.png" alt="AI Generated Meal Plan showing breakfast, lunch and dinner" class="app-screenshot active">
+                <img src="screenshots/recipe-detail.png" alt="Recipe detail with ingredients and step-by-step instructions" class="app-screenshot">
+                <img src="screenshots/ai-generate.png" alt="AI Meal Plan configuration with cuisines and preferences" class="app-screenshot">
+            </div>
+            <div class="screenshot-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </div>
     </section>
 
     <!-- Pain Section -->
@@ -721,11 +859,11 @@
         <div class="stats-grid">
             <div class="stat">
                 <div class="stat-number">5+</div>
-                <div class="stat-label">Hours saved per week</div>
+                <div class="stat-label">Hours designed to save weekly</div>
             </div>
             <div class="stat">
                 <div class="stat-number">50%</div>
-                <div class="stat-label">Less food waste</div>
+                <div class="stat-label">Target food waste reduction</div>
             </div>
             <div class="stat">
                 <div class="stat-number">60s</div>
@@ -831,13 +969,16 @@
 
         <div class="why-content" style="max-width: 700px; margin: 0 auto; text-align: center;">
             <p style="font-size: 1.15rem; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem;">
-                We're a family that got tired of the same exhausting routine: standing in front of the fridge at 5pm, realizing the chicken expired yesterday, and ordering pizza <em>again</em>.
+                I'm Steve—a dad, software engineer, and formerly terrible meal planner. Last year, I threw away a full rotisserie chicken because I forgot it was in the fridge. My wife found it. It wasn't pretty.
             </p>
             <p style="font-size: 1.15rem; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem;">
-                So we built the app we wished existed. One that actually knows what's in your pantry, respects your family's dietary needs, and takes the mental load off your shoulders.
+                That's when I started building Lazy Dad Gourmet—the app I wished existed. One that actually tracks what's in your fridge, tells you what's about to expire, and creates meal plans that use it all up.
+            </p>
+            <p style="font-size: 1.15rem; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem;">
+                My kids have food allergies. My wife is vegetarian on weekdays. I needed something that could handle real family complexity—not just another recipe database.
             </p>
             <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.8;">
-                Lazy Dad Gourmet is launching soon. Be among the first to try it.
+                We're launching on the App Store this spring. Join the waitlist and help shape the app.
             </p>
         </div>
     </section>
@@ -875,15 +1016,23 @@
 
     <!-- Final CTA -->
     <section class="final-cta">
-        <h2>Be the First to End Dinner Stress</h2>
-        <p>Lazy Dad Gourmet is launching soon. Get notified when it's available.</p>
-        <a href="mailto:support@lazydadgourmet.com?subject=Notify%20me%20when%20Lazy%20Dad%20Gourmet%20launches" class="btn btn-primary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            Notify Me at Launch
-        </a>
+        <h2>Join the Waitlist</h2>
+        <p>Be among the first 500 to get lifetime free access to all features.</p>
+        <form class="signup-form" id="footer-signup" onsubmit="handleSignup(event)" style="margin: 0 auto;">
+            <div class="form-row">
+                <input type="email" placeholder="Enter your email" required class="email-input" id="footer-email" style="border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.95);">
+                <button type="submit" class="btn btn-primary">
+                    Get Early Access
+                </button>
+            </div>
+            <p class="signup-success" id="footer-success" style="display: none; color: white;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                You're on the list! We'll email you at launch.
+            </p>
+        </form>
         <p class="cta-note">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-            Free to download • No spam, just launch news
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Launching Spring 2026 • No spam, ever
         </p>
     </section>
 
@@ -916,6 +1065,70 @@
                 item.classList.toggle('open');
             });
         });
+
+        // Screenshot carousel
+        const screenshots = document.querySelectorAll('.app-screenshot');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            screenshots.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            screenshots[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+
+        // Auto-advance carousel
+        setInterval(() => {
+            const next = (currentSlide + 1) % screenshots.length;
+            showSlide(next);
+        }, 4000);
+
+        // Waitlist counter
+        function updateCounter() {
+            const signups = JSON.parse(localStorage.getItem('ldg_signups') || '[]');
+            const counter = document.getElementById('waitlist-counter');
+            if (counter) {
+                counter.textContent = signups.length;
+            }
+        }
+        updateCounter();
+
+        // Signup form handler
+        function handleSignup(e) {
+            e.preventDefault();
+            const form = e.target;
+            const emailInput = form.querySelector('.email-input');
+            const successMsg = form.querySelector('.signup-success');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            // Show loading state
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Joining...';
+            submitBtn.disabled = true;
+
+            // Simulate brief delay for UX
+            setTimeout(() => {
+                // In production, this would submit to your backend
+                // For now, we'll show success and store in localStorage
+                const email = emailInput.value;
+                const signups = JSON.parse(localStorage.getItem('ldg_signups') || '[]');
+                if (!signups.includes(email)) {
+                    signups.push(email);
+                    localStorage.setItem('ldg_signups', JSON.stringify(signups));
+                    updateCounter();
+                }
+
+                // Show success message
+                form.querySelector('.form-row').style.display = 'none';
+                successMsg.style.display = 'flex';
+            }, 500);
+        }
     </script>
 </body>
 </html>
